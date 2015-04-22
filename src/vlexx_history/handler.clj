@@ -33,6 +33,7 @@
         (middleware/wrap-json-response)))
 
 
-  (let [my-pool (mk-pool)
-        minute 60000]
-  (every minute #(print (fetcher/check-delays)) my-pool))
+   (def tp (mk-pool))
+
+   (defn start-timer []
+    (every 60000 fetcher/check-delays tp))

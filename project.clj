@@ -12,7 +12,8 @@
                  [cheshire "4.0.3"]
                  [clj-time "0.9.0"]]
   :plugins [[lein-ring "0.8.13"]]
-  :ring {:handler vlexx-history.handler/app}
+  :ring {:handler vlexx-history.handler/app
+         :init vlexx-history.handler/start-timer}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [ring-mock "0.1.5"]]}})
