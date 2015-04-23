@@ -15,8 +15,8 @@
       (context "/trains/all" [] (defroutes documents-routes
         (GET  "/" [] (response (database/get-all-documents)))))
 
-      (context "/trains/delayed" [] (defroutes documents-routes
-        (GET  "/" [] (response (database/get-delayed-documents)))))
+      (context "/trains/top10/:date" [date] (defroutes documents-routes
+        (GET  "/" [] (response (database/get-delayed-top10 date)))))
 
       (route/not-found "Not Found"))
 

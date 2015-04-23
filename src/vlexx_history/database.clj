@@ -2,8 +2,7 @@
       (:gen-class)
       (:require [monger.core :as mg]
                 [monger.collection :as mc]
-                [clj-time.core :as t]
-                [clj-time.format :as f]))
+                [monger.query :refer :all]))
 
   (def conn (mg/connect))
   (def db (mg/get-db conn "vlexx-history"))
@@ -14,9 +13,12 @@
     "Returns a list of all trains in the database"
         (mc/find-seq db coll {}))
 
-  (defn get-delayed-documents[]
-    "Returns a list of all delayed trains in the database"
-        (mc/find-seq db coll {:prognosemin {:$gt "0"}}))
+  (defn get-delayed-top10 [day]
+    "Returns a list of the 10 most delayed trains"
+     (with-collection db coll
+      (find {:tag day})
+      (sort (array-map :prognosemin 1))
+      (limit 10)))
 
   (defn save-result-in-db [auskuenfte]
     "Saves a list of (denormalized) trains to the database"
