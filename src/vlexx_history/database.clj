@@ -1,5 +1,6 @@
   (ns vlexx-history.database
       (:gen-class)
+      (:refer-clojure :exclude [sort find])
       (:require [monger.core :as mg]
                 [monger.collection :as mc]
                 [monger.query :refer :all]))
