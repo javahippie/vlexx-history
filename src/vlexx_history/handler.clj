@@ -3,37 +3,28 @@
       (:use compojure.core)
       (:use cheshire.core)
       (:use ring.util.response)
-      (:use overtone.at-at)
-
 
       (:require [compojure.handler :as handler]
                 [ring.middleware.json :as middleware]
                 [compojure.route :as route]
                 [vlexx-history.fetcher :as fetcher]
-                [monger.core :as mg]
-                [monger.collection :as mc]))
-
-
-  (defn get-all-documents[]
-     (let [conn (mg/connect)
-          db   (mg/get-db conn "vlexx-history")
-          coll "reports"]
-        (response (.toString (mc/find db coll))))
-    )
+                [vlexx-history.database :as database]
+                [vlexx-history.task :as task]))
 
    (defroutes app-routes
-      (context "/documents" [] (defroutes documents-routes
-        (GET  "/" [] (get-all-documents))))
-      (route/not-found "Not Found"))
+      (context "/trains/all" [] (defroutes documents-routes
+        (GET  "/" [] (response (database/get-all-documents)))))
 
+      (context "/trains/delayed" [] (defroutes documents-routes
+        (GET  "/" [] (response (database/get-delayed-documents)))))
+
+      (route/not-found "Not Found"))
 
    (def app
       (-> (handler/api app-routes)
         (middleware/wrap-json-body)
         (middleware/wrap-json-response)))
 
-
-   (def tp (mk-pool))
-
    (defn start-timer []
-    (every 60000 fetcher/check-delays tp))
+     "Schedules the request to the vlexx server"
+     (task/schedule fetcher/check-delays))

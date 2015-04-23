@@ -1,33 +1,22 @@
   (ns vlexx-history.fetcher
       (:gen-class)
-      (:require [clj-http.client :as client]
-                [monger.core :as mg]
-                [monger.collection :as mc]
+      (:require [vlexx-history.database :as database]
+                [clj-http.client :as client]
                 [clj-time.core :as t]
                 [clj-time.format :as f]))
 
-
-  (defn todays-date
-    []
+  (defn todays-date []
+    "Returns todays date as string, due to my failed attempts to save a joda date in the database. To be continued"
     (f/unparse (f/formatters :date) (t/today-at-midnight)))
 
-
-  (defn flatten-dataset
-    [auskuenfte]
+  (defn flatten-dataset [auskuenfte]
+    "Denormalizes the request objects and adds todays date, so that a unique key can be created"
     (map #(assoc % :bahnhof (:name auskuenfte)
                    :stand   (:stand auskuenfte)
                    :tag     (todays-date)) (:abfahrt auskuenfte) ))
 
-  (defn save-in-db
-    [auskuenfte]
-   (let [conn (mg/connect)
-          db   (mg/get-db conn "vlexx-history")
-          coll "reports"]
-     (print(map #(mc/upsert db coll {:zug (:zug %) :zeit (:zeit %) :tag (todays-date)} %) auskuenfte))
-     (mg/disconnect conn)))
-
-
-  (defn check-delays
-    []
-    (let [response (:body (client/get "http://www.vlexx.de/etc_data.php?type=stationsauskunft&bhf=FMZ" {:as :json}))]
-      (print(save-in-db (flatten-dataset response)))))
+  (defn check-delays []
+    "Fetches datasets from the Vlexx servers and calls a routine for storing in database"
+    (let
+      [response (:body (client/get "http://www.vlexx.de/etc_data.php?type=stationsauskunft&bhf=FMZ" {:as :json}))]
+      (print(database/save-result-in-db (flatten-dataset response)))))
