@@ -9,7 +9,8 @@
                 [compojure.route :as route]
                 [vlexx-history.fetcher :as fetcher]
                 [vlexx-history.database :as database]
-                [vlexx-history.task :as task]))
+                [vlexx-history.task :as task]
+                [clojure.tools.logging :as log]))
 
    (defroutes app-routes
       (context "/trains/all" [] (defroutes documents-routes
@@ -27,4 +28,5 @@
 
    (defn start-timer []
      "Schedules the request to the vlexx server"
+     (log/info "Init method was called")
      (task/schedule fetcher/check-delays))

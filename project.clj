@@ -10,7 +10,8 @@
                  [overtone/at-at "1.2.0"]
                  [clj-http "1.1.0"]
                  [cheshire "4.0.3"]
-                 [clj-time "0.9.0"]]
+                 [clj-time "0.9.0"]
+                 [org.clojure/tools.logging "0.3.1"]]
   :plugins [[lein-ring "0.8.13"]]
   :ring {:handler vlexx-history.handler/app
          :init vlexx-history.handler/start-timer}
