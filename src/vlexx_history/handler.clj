@@ -12,18 +12,26 @@
                 [vlexx-history.task :as task]
                 [clojure.tools.logging :as log]))
 
+   (defn remove-id [response]
+     (encode (map #(dissoc % :_id) response)))
+
+   (defn get-all-trains []
+     (response (remove-id (database/get-all-documents))))
+
+   (defn get-delayed-top10 [date]
+     (response (remove-id (database/get-delayed-top10 date))))
+
    (defroutes app-routes
       (context "/trains/all" [] (defroutes documents-routes
-        (GET  "/" [] (response (database/get-all-documents)))))
+        (GET  "/" [] (get-all-trains))))
 
       (context "/trains/top10/:date" [date] (defroutes documents-routes
-        (GET  "/" [] (response (database/get-delayed-top10 date)))))
+        (GET  "/" [] (get-delayed-top10 date))))
 
       (route/not-found {:status 404}))
 
    (def app
       (-> (handler/api app-routes)
-        (middleware/wrap-json-body)
         (middleware/wrap-json-response)))
 
    (defn start-timer []

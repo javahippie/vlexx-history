@@ -10,7 +10,6 @@
   (def db (mg/get-db conn "vlexx-history"))
   (def coll "reports")
 
-
   (defn get-all-documents []
     "Returns a list of all trains in the database"
         (log/info "Request to database/get-all-documents")
