@@ -14,14 +14,14 @@
   (defn get-all-documents []
     "Returns a list of all trains in the database"
         (log/info "Request to database/get-all-documents")
-        (mc/find-seq db coll {}))
+        (mc/find-maps db coll {}))
 
   (defn get-delayed-top10 [day]
     "Returns a list of the 10 most delayed trains"
      (log/info "Request to database/get-delayed-top10")
      (with-collection db coll
       (find {:tag day})
-      (sort (array-map :prognosemin 1))
+      (sort (array-map :prognosemin -1))
       (limit 10)))
 
   (defn save-result-in-db [auskuenfte]
