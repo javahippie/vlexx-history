@@ -28,7 +28,9 @@
       (context "/trains/top10/:date" [date] (defroutes documents-routes
         (GET  "/" [] (get-delayed-top10 date))))
 
-      (route/not-found {:status 404}))
+      (route/resources "/")
+
+      (route/not-found "Page not found"))
 
    (def app
       (-> (handler/api app-routes)
