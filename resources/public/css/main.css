@@ -1,0 +1,21 @@
+body {
+  padding: 16px;
+}
+
+div#train-container {
+}
+
+div.train-panel {
+  border: 1px solid black;
+  display: block;
+  margin-bottom: 8px;
+}
+
+div.train-panel .train-panel-header {
+  background-color: #EEEEEE;
+  padding: 8px;
+}
+
+div.train-panel .train-panel-content {
+  padding: 8px;
+}

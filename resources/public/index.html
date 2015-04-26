@@ -1,27 +1,31 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html ng-app="vlexxFrontend">
+<html>
     <head>
         <title>My Angular Test</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"></link>
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css"></link>
+        <link type="text/css" rel="stylesheet" href="css/main.css"></link>
         <script type="text/javascript" src="js/angular.min.js"></script>
         <script type="text/javascript" src="js/angular-resource.js"></script>
         <script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="js/controller.js"></script>
         <script type="text/javascript" src="js/service.js"></script>
-        <script type="text/css" src="css/bootstrap.min.css"></script>
-        <script type="text/css" src="css/bootstrap-theme.min.css"></script>
     </head>
-    <body ng-controller="TrainController">
-        <ul>
-            <li ng-repeat="train in trains">
-                {{train.zug}}
-            </li>
-        </ul>
+    <body ng-app="vlexxFrontend" ng-controller="TrainController">
+        <div id="train-header" class="jumbotron">
+             <h1>Alle Züge, Abfahrt Mainz</h1>
+        </div>
+        <div id="train-container">
+            <div class="train-panel" ng-repeat="train in trains">
+                <div class="train-panel-header">
+                    {{train.zeit}} nach {{train.ziel}} ({{train.zug}})
+                </div>
+                <div class="train-panel-content">
+                    {{train.prognosemin}} Minuten Verspätung
+                </div>
+            </div>
+        </div>
     </body>
 </html>
