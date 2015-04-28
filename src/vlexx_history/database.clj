@@ -23,7 +23,13 @@
       (sort (array-map :prognosemin -1))
       (limit 10)))
 
+  (defn get-stats []
+    "Returns the statistics for the landing page"
+    (log/info "Request to database/get-stats")
+    (mc/aggregate db coll {:group {:_id "tag", :sum "$prognosemin"}}))
+
   (defn save-result-in-db [auskuenfte]
     "Saves a list of (denormalized) trains to the database"
      (log/info "Request to save-result-in-db ")
      (log/info (map #(mc/upsert db coll {:zug (:zug %) :zeit (:zeit %) :tag (:tag %)} %) auskuenfte)))
+

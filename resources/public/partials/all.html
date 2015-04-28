@@ -1,0 +1,10 @@
+<div id="train-container" ng-controller="TrainController">
+    <div class="train-panel" ng-repeat="train in trains">
+        <div class="train-panel-header">
+            {{train.zeit}} nach {{train.ziel}} ({{train.zug}})
+        </div>
+        <div class="train-panel-content">
+            {{train.prognosemin}} Minuten Verspätung
+        </div>
+    </div>
+</div>

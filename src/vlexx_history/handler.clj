@@ -6,6 +6,7 @@
 
       (:require [compojure.handler :as handler]
                 [ring.middleware.json :as middleware]
+                [ring.util.response :as resp]
                 [compojure.route :as route]
                 [vlexx-history.fetcher :as fetcher]
                 [vlexx-history.database :as database]
@@ -21,6 +22,9 @@
    (defn get-delayed-top10 [date]
      (response (remove-id (database/get-delayed-top10 date))))
 
+   (defn get-stats []
+     (response (database/get-stats)))
+
    (defroutes app-routes
       (context "/trains/all" [] (defroutes documents-routes
         (GET  "/" [] (get-all-trains))))
@@ -28,7 +32,11 @@
       (context "/trains/top10/:date" [date] (defroutes documents-routes
         (GET  "/" [] (get-delayed-top10 date))))
 
+      (context "/trains/stats" [] (defroutes document-routes
+        (GET "/" [] (get-stats))))
+
       (route/resources "/")
+      (GET "/" [] (resp/resource-response "index.html" {:root "public"}))
 
       (route/not-found "Page not found"))
 
