@@ -1,3 +1,7 @@
+vlexxFrontend.controller('MenuController', function($scope) {
+     $scope.currentdate = currentDateAsDateString();
+});
+
 vlexxFrontend.controller('TrainController', function ($scope, TrainFactory) {
      $scope.trains = TrainFactory.query();
 });

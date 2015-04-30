@@ -15,10 +15,12 @@
         <script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="js/controller.js"></script>
         <script type="text/javascript" src="js/service.js"></script>
+        <script type="text/javascript" src="js/util.js"></script>
     </head>
 
     <body ng-app="vlexxFrontend" >
         <nav class="navbar-fixed-top navbar-default">
+
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -33,9 +35,9 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" ng-controller="MenuController">
           <li><a href="/#/all">Aktuell</a></li>
-          <li><a href="/#/top10/2015-04-28">Top 10</a></li>
+          <li><a href="/#/top10/{{currentdate}}">Top 10</a></li>
           <li><a href="/#/stats">Statistiken</a></li>
           <li><a href="/#/wtf">Was soll das?</a></li>
       </ul>
