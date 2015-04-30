@@ -17,7 +17,7 @@
     "Fetches datasets from the Vlexx servers and calls a routine for storing in database"
     (log/info "Loading data from vlexx")
     (try
-    (let
-      [response (:body (client/get "http://www.vlexx.de/etc_data.php?type=stationsauskunft&bhf=FMZ" {:as :json}))]
-      (database/save-result-in-db (flatten-dataset response)))
-      (catch Exception e (log/error "Error while updating trains"))))
+      (let
+        [response (:body (client/get "http://www.vlexx.de/etc_data.php?type=stationsauskunft&bhf=FMZ" {:as :json}))]
+        (database/save-result-in-db (flatten-dataset response)))
+      (catch Exception e (log/error "Error while updating trains" e))))

@@ -12,7 +12,11 @@ vlexxFrontend.config(['$routeProvider',
         controller: 'Top10Controller'
       }).
       when('/wtf', {
-        templateUrl: 'partials/wtf.html',
+        templateUrl: 'partials/wtf.html'
+      }).
+      when('/stats', {
+        templateUrl: 'partials/stats.html',
+        controller: 'StatController'
       }).
       otherwise({
         redirectTo: '/all'
