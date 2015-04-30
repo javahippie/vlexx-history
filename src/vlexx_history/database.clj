@@ -10,16 +10,26 @@
   (def db (mg/get-db conn "vlexx-history"))
   (def coll "reports")
 
-  (defn get-all-documents []
+  (defn get-current-documents [day]
     "Returns a list of all trains in the database"
         (log/info "Request to database/get-all-documents")
-        (mc/find-maps db coll {}))
+        (with-collection db coll
+          (find {:tag day})
+          (sort (array-map :zeit 1))))
 
   (defn get-delayed-top10 [day]
     "Returns a list of the 10 most delayed trains"
      (log/info "Request to database/get-delayed-top10")
      (with-collection db coll
       (find {:tag day})
+      (sort (array-map :prognosemin -1))
+      (limit 10)))
+
+  (defn get-delayed-top10-all-time []
+    "Returns the 10 most delayed trains of all time"
+     (log/info "Request to database/get-delayed-top10")
+     (with-collection db coll
+      (find)
       (sort (array-map :prognosemin -1))
       (limit 10)))
 

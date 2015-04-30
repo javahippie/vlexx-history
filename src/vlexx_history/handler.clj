@@ -6,28 +6,33 @@
 
       (:require [compojure.handler :as handler]
                 [ring.middleware.json :as middleware]
-                [ring.util.response :as resp]
                 [compojure.route :as route]
                 [vlexx-history.fetcher :as fetcher]
                 [vlexx-history.database :as database]
                 [vlexx-history.task :as task]
+                [vlexx-history.dateutil :as dateutil]
                 [clojure.tools.logging :as log]))
+
+  (defn json-response [body]
+    {:status  200
+     :headers {"Content-Type" "application/json; charset=utf-8"}
+     :body    body})
 
    (defn remove-id [response]
      (encode (map #(dissoc % :_id) response)))
 
-   (defn get-all-trains []
-     (response (remove-id (database/get-all-documents))))
+   (defn get-current-trains []
+     (json-response (remove-id (database/get-current-documents (dateutil/todays-date)))))
 
    (defn get-delayed-top10 [date]
-     (response (remove-id (database/get-delayed-top10 date))))
+     (json-response (remove-id (database/get-delayed-top10 date))))
 
    (defn get-stats []
-     (response (database/get-stats)))
+     (json-response (database/get-stats)))
 
    (defroutes app-routes
-      (context "/trains/all" [] (defroutes documents-routes
-        (GET  "/" [] (get-all-trains))))
+      (context "/trains/current" [] (defroutes documents-routes
+        (GET  "/" [] (get-current-trains))))
 
       (context "/trains/top10/:date" [date] (defroutes documents-routes
         (GET  "/" [] (get-delayed-top10 date))))
@@ -36,7 +41,7 @@
         (GET "/" [] (get-stats))))
 
       (route/resources "/")
-      (GET "/" [] (resp/resource-response "index.html" {:root "public"}))
+      (GET "/" [] (resource-response "index.html" {:root "public"}))
 
       (route/not-found "Page not found"))
 

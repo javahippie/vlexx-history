@@ -6,3 +6,10 @@
 (defn todays-date []
     "Returns todays date as string, due to my failed attempts to save a joda date in the database. To be continued"
     (f/unparse (f/formatters :date) (t/today-at-midnight)))
+
+(defn current-time []
+    "Returns todays date as string, due to my failed attempts to save a joda date in the database. To be continued"
+    (f/unparse (f/formatters :hour-minute) (t/now)))
+
+(current-time)
+

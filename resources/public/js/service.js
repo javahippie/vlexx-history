@@ -1,5 +1,5 @@
 vlexxFrontend.factory('TrainFactory', function($resource) {
-    return $resource('/trains/all', {}, {
+    return $resource('/trains/current', {}, {
         query: {method: 'GET', isArray: true}
     });
 });
