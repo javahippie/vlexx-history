@@ -3,8 +3,9 @@
       (:use overtone.at-at)
       (:require [clojure.tools.logging :as log]))
 
-  (def tp (mk-pool))
-
   (defn schedule [function-to-be-scheduled]
+    "Scheduling the passed method to be executed every minute"
     (log/info "A recurring job was scheduled")
-    (every 60000 function-to-be-scheduled tp))
+    (let [minute 60000
+          tp (mk-pool)]
+      (every minute function-to-be-scheduled tp)))
