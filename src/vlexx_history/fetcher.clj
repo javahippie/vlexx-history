@@ -4,6 +4,8 @@
       (:use vlexx-history.typeutil)
       (:require [vlexx-history.database :as database]
                 [clj-http.client :as client]
+                [clj-time.core :as t]
+                [monger.joda-time]
                 [clojure.tools.logging :as log]))
 
   (defn flatten-dataset [auskuenfte]
@@ -11,7 +13,7 @@
     (map #(assoc % :bahnhof (:name auskuenfte)
                    :stand   (:stand auskuenfte)
                    :prognosemin (parse-int (:prognosemin %))
-                   :tag     (todays-date)) (:abfahrt auskuenfte)))
+                   :tag      (t/today-at-midnight)) (:abfahrt auskuenfte)))
 
   (defn check-delays []
     "Fetches datasets from the Vlexx servers and calls a routine for storing in database"

@@ -9,7 +9,7 @@
                  [com.novemberain/monger "2.1.0"]
                  [overtone/at-at "1.2.0"]
                  [clj-http "1.1.0"]
-                 [cheshire "4.0.3"]
+                 [cheshire "5.3.1"]
                  [clj-time "0.9.0"]
                  [org.clojure/tools.logging "0.3.1"]]
   :plugins [[lein-ring "0.8.13"]]

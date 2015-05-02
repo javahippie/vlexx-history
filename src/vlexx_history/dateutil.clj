@@ -11,5 +11,5 @@
     "Returns todays date as string, due to my failed attempts to save a joda date in the database. To be continued"
     (f/unparse (f/formatters :hour-minute) (t/now)))
 
-(current-time)
-
+(defn now-in-germany []
+  (t/to-time-zone (t/now) (t/time-zone-for-id "Europe/Berlin")))
