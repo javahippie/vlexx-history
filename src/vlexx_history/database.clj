@@ -14,14 +14,15 @@
     "Returns a list of all trains in the database"
         (log/info "Request to database/get-all-documents")
         (with-collection db coll
-          (find {:tag day})
-          (sort (array-map :zeit 1))))
+          (find {:zeit {:$gte day}})
+          (sort (array-map :zeit -1))
+          (limit 20)))
 
   (defn get-delayed-top10 [day]
     "Returns a list of the 10 most delayed trains"
      (log/info "Request to database/get-delayed-top10")
      (with-collection db coll
-      (find {:tag day})
+      (find {:zeit {:$gte day}})
       (sort (array-map :prognosemin -1))
       (limit 10)))
 
@@ -41,5 +42,4 @@
   (defn save-result-in-db [auskuenfte]
     "Saves a list of (denormalized) trains to the database"
      (log/info "Request to save-result-in-db ")
-     (log/info (map #(mc/upsert db coll {:zug (:zug %) :zeit (:zeit %) :tag (:tag %)} %) auskuenfte)))
-
+     (log/info (map #(mc/upsert db coll {:zug (:zug %) :zeit (:zeit %)} %) auskuenfte)))

@@ -13,7 +13,7 @@
     (map #(assoc % :bahnhof (:name auskuenfte)
                    :stand   (:stand auskuenfte)
                    :prognosemin (parse-int (:prognosemin %))
-                   :tag      (t/today-at-midnight)) (:abfahrt auskuenfte)))
+                   :zeit (time-string-to-datetime (:zeit %))) (:abfahrt auskuenfte)))
 
   (defn check-delays []
     "Fetches datasets from the Vlexx servers and calls a routine for storing in database"

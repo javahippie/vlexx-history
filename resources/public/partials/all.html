@@ -7,7 +7,7 @@
 <div id="train-container" class="container">
     <div class="panel panel-default" ng-repeat="train in trains">
         <div class="panel-heading">
-            {{train.zeit}} nach {{train.ziel}} ({{train.zug}})
+            <span ng-bind="train.zeit" /> nach {{train.ziel}} ({{train.zug}})
         </div>
         <div class="panel-body">
             {{train.prognosemin}} Minuten Verspätung - {{train.prognose}}
