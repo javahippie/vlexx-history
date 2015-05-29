@@ -1,13 +1,13 @@
 <div class="page-header">
     <div class="container">
-      <h1>Aktueller Stand</h1>
+      <h1>Aktueller Stand (Heute)</h1>
     </div>
 </div>
 
 <div id="train-container" class="container">
     <div class="panel panel-default" ng-repeat="train in trains">
         <div class="panel-heading">
-            <span ng-bind="train.zeit" /> nach {{train.ziel}} ({{train.zug}})
+            <span ng-bind="train.zeit | date:'hh:mm'" /> nach {{train.ziel}} ({{train.zug}})
         </div>
         <div class="panel-body">
             {{train.prognosemin}} Minuten Verspätung - {{train.prognose}}

@@ -11,7 +11,7 @@
   (def coll "reports")
 
   (defn get-current-documents [day]
-    "Returns a list of all trains in the database"
+    "Returns a list of all trains in the database for the given date"
         (log/info "Request to database/get-all-documents")
         (with-collection db coll
           (find {:zeit {:$gte day}})

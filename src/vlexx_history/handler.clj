@@ -53,3 +53,4 @@
      "Schedules the request to the vlexx server"
      (log/info "Init method was called")
      (task/schedule fetcher/check-delays))
+
