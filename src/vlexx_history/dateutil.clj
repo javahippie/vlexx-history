@@ -3,9 +3,12 @@
       (:require [clj-time.core :as t]
                 [clj-time.format :as f]))
 
+(defn to-german-timezone [dat]
+  (t/to-time-zone dat (t/time-zone-for-id "Europe/Berlin")))
+
 (defn now-in-germany []
   "Returns the current date in germany"
-  (t/to-time-zone (t/now) (t/time-zone-for-id "Europe/Berlin")))
+  (to-german-timezone (t/now)))
 
 (defn tomorrow-in-germany []
   "Returns the current date + 1 in germany"
@@ -15,7 +18,7 @@
 
 (defn parse-date [string-rep]
   "Parses a date string to date format"
-  (f/parse-local-date (f/formatters :date) string-rep))
+  (to-german-timezone (f/parse-local-date (f/formatters :date) string-rep)))
 
 (defn parse-time [string-rep]
   "Parses a time string to time format"
