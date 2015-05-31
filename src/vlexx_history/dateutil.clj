@@ -20,6 +20,10 @@
   "Parses a date string to date format"
   (to-german-timezone (f/parse-local-date (f/formatters :date) string-rep)))
 
+(defn parse-date-time [string-rep]
+  "Parses a date string to datetime format"
+  (f/parse-local (f/formatters :date) string-rep))
+
 (defn parse-time [string-rep]
   "Parses a time string to time format"
   (f/parse-local-time (f/formatters :hour-minute) string-rep))

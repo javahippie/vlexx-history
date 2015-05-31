@@ -25,7 +25,7 @@
      (json-response (remove-id (database/get-current-documents (clj-time.core/today)))))
 
    (defn get-delayed-top10 [date]
-     (json-response (remove-id (database/get-delayed-top10 (dateutil/parse-date date)))))
+     (json-response (remove-id (database/get-delayed-top10 (dateutil/parse-date-time date)))))
 
    (defn get-stats []
      (json-response (database/get-stats)))
