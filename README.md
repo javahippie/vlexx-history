@@ -1,6 +1,6 @@
 # vlexx-history
 
-FIXME
+Webpage for tracking delayed trains of the company Vlexx in the area of Frankfurt/Main, Germany.
 
 ## Prerequisites
 
